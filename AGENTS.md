@@ -1,34 +1,29 @@
-### Unity
+### Unity & C# Coding Standards
 - Project developed in Unity.
 - Use C#.
+- **Always ensure all curly braces `{ }` are properly closed in scripts.** Never provide truncated code snippets missing their closing braces or namespace/class closures.
 - Avoid creating unnecessary dependencies.
 - Prefer composition over inheritance when appropriate.
 
-### Architecture
+### Architecture & Structure
 - Follow the project's existing folder structure for gameplay systems (e.g., `Assets/Scripts` or `Assets/_Project/Scripts`).
+- Always wrap new scripts in appropriate `namespace` blocks. Namespaces should generally follow the project's root namespace or mirror the folder structure.
 - Configurable data should preferably use `ScriptableObject`.
 - UI should not contain gameplay logic.
 - Gameplay systems should not directly depend on UI components. Use events, interfaces, or mediators.
 
-### Save System
-- Respect the project's existing save architecture.
-- Do not alter existing save formats or structures without justification.
-- All new persistent information should be added to the current save system.
-- Maintain compatibility with existing saves whenever possible.
+### Performance & Memory
+- Strictly avoid Garbage Collection (GC) allocations in hot paths (`Update`, `FixedUpdate`, `LateUpdate`).
+- Do not use `new`, string concatenations, or LINQ inside update loops.
+- Use Object Pooling for any entity that is frequently created and destroyed (e.g., bullets, enemies, floating text).
 
-### Naming Conventions
-- Classes: `PascalCase`
-- Methods: `PascalCase`
-- Private fields: `_camelCase`
-- Interfaces: Begin with `I` (e.g., `IInteractable`).
+### Asynchronous Operations
+- Analyze the project to see if it relies on standard `IEnumerator` Coroutines, `async/await` Tasks, Unity 6 `Awaitable`, or third-party solutions like `UniTask`.
+- Do not mix paradigms unless explicitly requested. Follow the established async pattern of the project.
 
-### Before Modifying
-- First analyze the related scripts and how they fit into the broader architecture.
-- Do not rewrite existing systems unnecessarily.
-- Preserve existing public APIs whenever possible to avoid breaking other dependencies. 
-
-### After Modifying
-- Summarize the modified files and briefly explain the reasoning behind architectural choices.
+### Prefabs, Scenes, and Assets
+- **NEVER** attempt to manually edit `.prefab`, `.unity`, `.controller`, or `.asset` files as raw text/YAML. You will corrupt them.
+- If a prefab, scene, or ScriptableObject instance needs to be modified, instruct the user to do it via the Unity Editor, OR write a temporary Unity Editor script (`MenuItem`) to perform the change safely via code.
 
 ### Unity Project Scope
 - Treat this repository as a Unity project first.
@@ -50,6 +45,26 @@
   - Do not use the legacy `UnityEngine.UI.Text`.
 - Prefer `[SerializeField]` references over `GameObject.Find`, `GetComponent`, or similar runtime searches.
 - Keep UI logic (presentation) strictly separate from gameplay/domain logic.
+
+### Save System
+- Respect the project's existing save architecture.
+- Do not alter existing save formats or structures without justification.
+- All new persistent information should be added to the current save system.
+- Maintain compatibility with existing saves whenever possible.
+
+### Naming Conventions
+- Classes: `PascalCase`
+- Methods: `PascalCase`
+- Private fields: `_camelCase`
+- Interfaces: Begin with `I` (e.g., `IInteractable`).
+
+### Before Modifying
+- First analyze the related scripts and how they fit into the broader architecture.
+- Do not rewrite existing systems unnecessarily.
+- Preserve existing public APIs whenever possible to avoid breaking other dependencies. 
+
+### After Modifying
+- Summarize the modified files and briefly explain the reasoning behind architectural choices.
 
 ### Self-Improvement Loop
 - After ANY correction from the user: update `tasks/lessons.md` (or the project's equivalent tracking file) with the pattern.
