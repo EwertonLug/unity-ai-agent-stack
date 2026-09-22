@@ -75,6 +75,10 @@ OpenCode
    │
    └── MCP ➔ Unity Editor
 ```
+**Instalação:**
+```
+winget install Unity.CLI
+```
 
 ## 4. Unity Pipeline (`com.unity.pipeline`)
 O Unity Pipeline package é o componente que permite à Unity CLI controlar remotamente o Unity Editor. Ele disponibiliza uma API HTTP local para automação, permitindo execução de comandos, testes, builds e desenvolvimento assistido. *(Destinado ao Unity 6 ou superior).*
