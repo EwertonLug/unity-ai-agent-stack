@@ -22,8 +22,8 @@
 - Do not mix paradigms unless explicitly requested. Follow the established async pattern of the project.
 
 ### Prefabs, Scenes, and Assets
-- **NEVER** attempt to manually edit `.prefab`, `.unity`, `.controller`, or `.asset` files as raw text/YAML. You will corrupt them.
-- If a prefab, scene, or ScriptableObject instance needs to be modified, instruct the user to do it via the Unity Editor, OR write a temporary Unity Editor script (`MenuItem`) to perform the change safely via code.
+- **NEVER** attempt to manually edit `.prefab`, `.unity`, `.controller`, or `.asset` files as raw text/YAML using standard file-editing tools. You will corrupt the complex FileIDs and GUIDs.
+- To modify these files, you must ALWAYS use specific Unity MCP tools that interface with the Unity Editor API, OR write a temporary C# Editor script (`MenuItem`) to apply the changes safely via code.
 
 ### Unity Project Scope
 - Treat this repository as a Unity project first.
