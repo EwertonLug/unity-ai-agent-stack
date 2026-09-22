@@ -76,7 +76,7 @@ OpenCode
    └── MCP ➔ Unity Editor
 ```
 **Instalação:**
-```
+```bash
 winget install Unity.CLI
 ```
 
@@ -105,6 +105,24 @@ Fornece conhecimento e workflows especializados para agentes de IA trabalhando c
 
 Atua como uma camada de conversão entre formatos de plugins e Skills de diferentes agentes. Neste workflow, adapta as Skills originalmente disponibilizadas para o Claude Code para formatos compatíveis com o OpenCode.
 
+**Como converter e instalar as Skills:**
+Você pode converter o plugin diretamente do repositório da Unity sem precisar baixar o acplugin manualmente. No seu terminal, execute:
+
+```bash
+npx @disdjj/acplugin convert Unity-Technologies/unity-agent-plugin --all --to opencode -o ./unity-plugin-convertido
+```
+
+Após a conversão terminar, o script gerará uma pasta `.opencode/skills` dentro do diretório `./unity-plugin-convertido`. Para instalar no seu projeto, basta **copiar/mover a pasta `.opencode/skills` gerada e colar diretamente na raiz do seu projeto**.
+
+A estrutura do seu projeto deve ficar assim:
+```text
+seu-projeto/
+├── .opencode/
+│   └── skills/
+│       └── (arquivos convertidos do Unity)
+```
+*Nota: Após colocar a pasta na raiz, reinicie o OpenCode para que ele carregue as novas Skills nativamente.*
+
 **Fluxo de conversão:**
 ```text
 Unity Agent Plugin ➔ Skills/Plugins ➔ Claude Code ➔ acplugin ➔ OpenCode
@@ -129,7 +147,7 @@ Unity Agent Plugin ➔ Skills/Plugins ➔ Claude Code ➔ acplugin ➔ OpenCode
                  │                           │
                  ▼                           ▼
         ┌─────────────────┐        ┌─────────────────┐
-        │      Skills     │        │   Unity Tools   │
+        │     Skills      │        │   Unity Tools   │
         │ Unity Agent     │        │                 │
         │ Plugin          │        │ MCP / CLI       │
         └─────────────────┘        └────────┬────────┘
@@ -221,7 +239,7 @@ Essa stack transforma o desenvolvimento tradicional com Unity em um workflow ass
               ▼                         ▼
          Unity MCP                 Unity CLI
               │                         │
-              │                    Unity Pipeline
+              │                   Unity Pipeline
               │                         │
               └────────────┬────────────┘
                            ▼
